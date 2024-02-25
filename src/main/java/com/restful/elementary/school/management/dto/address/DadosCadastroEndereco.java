@@ -1,12 +1,14 @@
 package com.restful.elementary.school.management.dto.address;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public record DadosCadastroEndereco(
 
         @NotBlank(message = "O campo rua é obrigatório")
+        @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
+        @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "O nome deve conter apenas letras e espaços")
         String street,
 
         @NotBlank(message = "O campo número é obrigatório")
@@ -14,9 +16,13 @@ public record DadosCadastroEndereco(
         String number,
 
         @NotBlank(message = "O campo bairro é obrigatório")
+        @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
+        @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "O nome deve conter apenas letras e espaços")
         String neighborhood,
 
         @NotBlank(message = "O campo cidade é obrigatório")
+        @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
+        @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "O nome deve conter apenas letras e espaços")
         String city,
 
         @NotBlank(message = "O campo estado é obrigatório")
@@ -24,6 +30,8 @@ public record DadosCadastroEndereco(
         String state,
 
         @NotBlank(message = "O campo país é obrigatório")
+        @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
+        @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "O nome deve conter apenas letras e espaços")
         String country,
 
         @NotBlank(message = "O CEP não pode ser nulo")

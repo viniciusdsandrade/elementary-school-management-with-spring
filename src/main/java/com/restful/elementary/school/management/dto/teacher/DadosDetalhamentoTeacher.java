@@ -19,6 +19,7 @@ public record DadosDetalhamentoTeacher(
         LocalDate birthDate,
 
         List<Discipline> disciplines,
+
         DadoDetalhamentoEndereco address
 ) {
 

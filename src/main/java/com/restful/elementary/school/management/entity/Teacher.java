@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity(name = "Teacher")
 @Table(name = "tb_teacher",
         schema = "db_elementary_school_management",
@@ -64,6 +64,7 @@ public class Teacher {
         this.email = teacher.email;
         this.cpf = teacher.cpf;
         this.birthDate = teacher.birthDate;
+        this.address = new Address(teacher.address);
         this.disciplines = new ArrayList<>(teacher.disciplines);
     }
 

@@ -1,17 +1,15 @@
-package com.restful.elementary.school.management.dto.teacher;
+package com.restful.elementary.school.management.dto.student;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.restful.elementary.school.management.dto.address.DadosCadastroEndereco;
-import com.restful.elementary.school.management.entity.enums.Discipline;
 import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public record DadosCadastroTeacher(
+public record DadosCadastroStudent(
 
         @NotNull(message = "O nome não pode ser nulo")
         @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
@@ -39,11 +37,25 @@ public record DadosCadastroTeacher(
         String cpf,
 
         @Valid
-        @NotNull(message = "Deve ministrar pelo menos uma disciplina")
-        List<Discipline> disciplines,
-
-        @Valid
         @NotNull(message = "O endereço não pode ser nulo")
-        DadosCadastroEndereco address
+        DadosCadastroEndereco address,
+
+        @NotNull(message = "O nome não pode ser nulo")
+        @Size(min = 1, max = 100, message = "O nome deve ter entre 1 e 100 caracteres")
+        @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "O nome deve conter apenas letras e espaços")
+        String parentName,
+
+        @Email(message = "O email do responsável deve ser válido")
+        @NotNull(message = "O email do responsável não pode ser nulo")
+        String parentEmail,
+
+        @Pattern(regexp = "^[0-9]{10,11}$", message = "O número de telefone do responsável deve conter entre 10 e 11 dígitos")
+        String parentPhoneNumber,
+
+        @Column(columnDefinition = "TEXT", nullable = true)
+        String allergies,
+
+        @Column(columnDefinition = "TEXT", nullable = true)
+        String medicalConditions
 ) {
 }

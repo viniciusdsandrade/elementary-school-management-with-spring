@@ -1,5 +1,6 @@
 package com.restful.elementary.school.management.dto.address;
 
+import com.restful.elementary.school.management.entity.Student;
 import com.restful.elementary.school.management.entity.Teacher;
 
 public record DadoDetalhamentoEndereco(
@@ -12,23 +13,6 @@ public record DadoDetalhamentoEndereco(
         String zipCode,
         String complement
 ) {
-    public DadoDetalhamentoEndereco(String street,
-                                    String number,
-                                    String neighborhood,
-                                    String city,
-                                    String state,
-                                    String country,
-                                    String zipCode,
-                                    String complement) {
-        this.street = street;
-        this.number = number;
-        this.neighborhood = neighborhood;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.zipCode = zipCode;
-        this.complement = complement;
-    }
 
     public DadoDetalhamentoEndereco(Teacher teacher) {
         this(
@@ -40,6 +24,19 @@ public record DadoDetalhamentoEndereco(
                 teacher.getAddress().getCountry(),
                 teacher.getAddress().getZipCode(),
                 teacher.getAddress().getComplement()
+        );
+    }
+
+    public DadoDetalhamentoEndereco(Student student) {
+        this(
+                student.getAddress().getStreet(),
+                student.getAddress().getNumber(),
+                student.getAddress().getNeighborhood(),
+                student.getAddress().getCity(),
+                student.getAddress().getState(),
+                student.getAddress().getCountry(),
+                student.getAddress().getZipCode(),
+                student.getAddress().getComplement()
         );
     }
 }

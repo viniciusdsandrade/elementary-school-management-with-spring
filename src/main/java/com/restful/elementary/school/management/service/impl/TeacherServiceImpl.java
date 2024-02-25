@@ -3,6 +3,8 @@ package com.restful.elementary.school.management.service.impl;
 import com.restful.elementary.school.management.dto.teacher.DadosCadastroTeacher;
 import com.restful.elementary.school.management.dto.teacher.DadosListagemTeacher;
 import com.restful.elementary.school.management.entity.Teacher;
+import com.restful.elementary.school.management.exception.DuplicateEntryException;
+import com.restful.elementary.school.management.exception.ResourceNotFoundException;
 import com.restful.elementary.school.management.repository.TeacherRepository;
 import com.restful.elementary.school.management.service.TeacherService;
 import org.springframework.data.domain.Page;
@@ -22,19 +24,26 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional
     public Teacher save(DadosCadastroTeacher dadosCadastroTeacher) {
+
+        if(teacherRepository.existsByCpf(dadosCadastroTeacher.cpf()))
+            throw new DuplicateEntryException("CPF already exists");
+
+        if(teacherRepository.existsByEmail(dadosCadastroTeacher.email()))
+            throw new DuplicateEntryException("Email already exists");
+
         Teacher teacher = new Teacher(dadosCadastroTeacher);
         return teacherRepository.save(teacher);
     }
 
     @Override
     public void delete(Long id) {
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new RuntimeException("Teacher not found"));
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
         teacherRepository.delete(teacher);
     }
 
     @Override
     public Teacher findById(Long id) {
-        return teacherRepository.findById(id).orElseThrow(() -> new RuntimeException("Teacher not found"));
+        return teacherRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
     }
 
     @Override
@@ -46,6 +55,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Page<DadosListagemTeacher> findByName(String name, Pageable pageable) {
         return teacherRepository.findByNameContainingIgnoreCase(name, pageable)
+                .map(DadosListagemTeacher::new);
+    }
+
+    @Override
+    public Page<DadosListagemTeacher> findByEmail(String email, Pageable page) {
+        return teacherRepository.findByEmailContainingIgnoreCase(email, page)
                 .map(DadosListagemTeacher::new);
     }
 }

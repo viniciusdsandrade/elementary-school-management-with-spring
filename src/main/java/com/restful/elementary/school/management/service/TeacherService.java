@@ -21,4 +21,6 @@ public interface TeacherService {
     Page<DadosListagemTeacher> findAll(Pageable pageable);
 
     Page<DadosListagemTeacher> findByName(String name, Pageable pageable);
+
+    Page<DadosListagemTeacher> findByEmail(String email, Pageable page);
 }

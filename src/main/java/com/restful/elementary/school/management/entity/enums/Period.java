@@ -10,4 +10,7 @@ public enum Period {
     SEVENTH_YEAR,
     EIGHTH_YEAR,
     NINTH_YEAR,
+    TENTH_YEAR,
+    ELEVENTH_YEAR,
+    TWELFTH_YEAR
 }

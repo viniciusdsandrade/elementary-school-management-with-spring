@@ -4,7 +4,6 @@ USE db_elementary_school_management;
 
 SELECT DATABASE() AS 'Current Database';
 
-DESCRIBE tb_teacher;
 SELECT * FROM tb_teacher;
 SELECT * FROM tb_discipline;
 

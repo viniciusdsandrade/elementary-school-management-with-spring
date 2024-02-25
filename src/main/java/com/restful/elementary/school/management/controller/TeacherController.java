@@ -47,7 +47,6 @@ public class TeacherController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDetalhamentoTeacher> findById(@PathVariable Long id) {
-
         Teacher teacher = teacherService.findById(id);
         return ResponseEntity.ok(new DadosDetalhamentoTeacher(teacher));
     }
@@ -58,6 +57,15 @@ public class TeacherController {
             @PageableDefault(sort = "id", size = 20)
             @RequestParam(required = false) Pageable page) {
         Page<DadosListagemTeacher> teachers = teacherService.findByName(name, page);
+        return ResponseEntity.ok(teachers);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Page<DadosListagemTeacher>> findByEmail(
+            @PathVariable String email,
+            @PageableDefault(sort = "id", size = 20)
+            @RequestParam(required = false) Pageable page) {
+        Page<DadosListagemTeacher> teachers = teacherService.findByEmail(email, page);
         return ResponseEntity.ok(teachers);
     }
 
