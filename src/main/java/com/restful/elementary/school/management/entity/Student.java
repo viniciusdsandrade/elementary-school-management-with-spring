@@ -33,6 +33,11 @@ public class Student {
     private String parentEmail;
     private String parentPhoneNumber;
 
+    //Um aluno pertence a uma Turma
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    private Group group;
+
     @Embedded
     private Address address;
 
@@ -63,6 +68,7 @@ public class Student {
         this.parentEmail = student.parentEmail;
         this.parentPhoneNumber = student.parentPhoneNumber;
         this.address = new Address(student.address);
+        this.group = student.group;
         this.allergies = student.allergies;
         this.medicalConditions = student.medicalConditions;
     }
@@ -116,7 +122,7 @@ public class Student {
                 "  \"address\": \"" + this.address + "\",\n" +
                 "  \"allergies\": \"" + this.allergies + "\",\n" +
                 "  \"medicalConditions\": \"" + this.medicalConditions + "\"\n" +
+                " \"group\": \"" + this.group + "\"\n" +
                 "}";
     }
-
 }

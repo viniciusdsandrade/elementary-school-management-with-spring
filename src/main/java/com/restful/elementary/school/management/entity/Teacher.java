@@ -34,6 +34,11 @@ public class Teacher {
     @Embedded
     private Address address;
 
+    // Um professor tem várias aulas, mas uma aula tem um professor
+    @OneToMany(mappedBy = "teacher")
+    @Setter(AccessLevel.NONE)
+    private List<Class> classes;
+
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Discipline.class)
     @Setter(AccessLevel.NONE)
@@ -66,6 +71,7 @@ public class Teacher {
         this.birthDate = teacher.birthDate;
         this.address = new Address(teacher.address);
         this.disciplines = new ArrayList<>(teacher.disciplines);
+        this.classes = new ArrayList<>(teacher.classes);
     }
 
     /**
@@ -132,12 +138,14 @@ public class Teacher {
     @Override
     public final String toString() {
         return "{\n" +
-                "  \"id\": " + id + ",\n" +
-                "  \"name\": \"" + name + "\",\n" +
-                "  \"email\": \"" + email + "\",\n" +
-                "  \"cpf\": \"" + cpf + "\",\n" +
-                "  \"birthDate\": \"" + birthDate + "\",\n" +
-                "  \"disciplines\": " + disciplines + "\n" +
+                "  \"id\": " + this.id + ",\n" +
+                "  \"name\": \"" + this.name + "\",\n" +
+                "  \"email\": \"" + this.email + "\",\n" +
+                "  \"cpf\": \"" + this.cpf + "\",\n" +
+                "  \"birthDate\": \"" + this.birthDate + "\",\n" +
+                "  \"disciplines\": " + this.disciplines + "\n" +
+                "  \"address\": " + this.address + "\n" +
+                "   \"classes\": " + this.classes + "\n" +
                 "}";
     }
 }

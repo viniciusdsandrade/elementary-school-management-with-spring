@@ -5,13 +5,13 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
+import java.util.Objects;
+
 @Embeddable
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_address",
-        schema = "db_elementary_school_management")
 public class Address {
 
     private String street;
@@ -47,11 +47,16 @@ public class Address {
 
     @Override
     public Address clone() {
+
+        Address address;
+
         try {
-            return (Address) super.clone();
+            address = (Address) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError("Cloning not supported", e);
+            address = new Address(this);
         }
+
+        return address;
     }
 
     @Override
@@ -77,22 +82,22 @@ public class Address {
 
         Address address = (Address) o;
 
-        return street.equals(address.street) &&
-                number.equals(address.number) &&
-                zipCode.equals(address.zipCode);
+        return Objects.equals(this.street, address.street) &&
+                Objects.equals(this.number, address.number) &&
+                Objects.equals(this.zipCode, address.zipCode);
     }
 
     @Override
     public String toString() {
         return "{\n" +
-                "\t\t\"street\": \"" + street + "\",\n" +
-                "\t\t\"number\": \"" + number + "\",\n" +
-                "\t\t\"complement\": \"" + complement + "\",\n" +
-                "\t\t\"neighborhood\": \"" + neighborhood + "\",\n" +
-                "\t\t\"city\": \"" + city + "\",\n" +
-                "\t\t\"state\": \"" + state + "\",\n" +
-                "\t\t\"country\": \"" + country + "\",\n" +
-                "\t\t\"zipCode\": \"" + zipCode + "\"\n" +
+                "\t\t\"street\": \"" + this.street + "\",\n" +
+                "\t\t\"number\": \"" + this.number + "\",\n" +
+                "\t\t\"complement\": \"" + this.complement + "\",\n" +
+                "\t\t\"neighborhood\": \"" + this.neighborhood + "\",\n" +
+                "\t\t\"city\": \"" + this.city + "\",\n" +
+                "\t\t\"state\": \"" + this.state + "\",\n" +
+                "\t\t\"country\": \"" + this.country + "\",\n" +
+                "\t\t\"zipCode\": \"" + this.zipCode + "\"\n" +
                 "\t}";
     }
 }
