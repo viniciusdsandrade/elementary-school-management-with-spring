@@ -11,11 +11,7 @@ public record DadosListagemStudent(
         String email,
         String cpf,
 
-        @JsonFormat(pattern = "dd/MM/yyyy",
-                shape = JsonFormat.Shape.STRING,
-                locale = "pt-BR",
-                timezone = "Brazil/East",
-                with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+        @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate birthDate,
 
         String parentName,

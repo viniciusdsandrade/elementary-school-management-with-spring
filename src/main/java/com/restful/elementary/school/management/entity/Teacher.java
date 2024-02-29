@@ -37,7 +37,7 @@ public class Teacher {
     // Um professor tem várias aulas, mas uma aula tem um professor
     @OneToMany(mappedBy = "teacher")
     @Setter(AccessLevel.NONE)
-    private List<Class> classes;
+    private List<Classes> classes;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Discipline.class)

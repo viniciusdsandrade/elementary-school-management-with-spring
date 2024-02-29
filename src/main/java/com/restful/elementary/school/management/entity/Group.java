@@ -6,6 +6,7 @@ Um grupo tem uma lista de estudantes, mas um estudante pertence a um grupo
  */
 
 
+import com.restful.elementary.school.management.dto.group.DadosCadastroGroup;
 import com.restful.elementary.school.management.entity.enums.Period;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -15,6 +16,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 Turma: 
@@ -45,7 +47,7 @@ public class Group {
     // Um grupo de uma lista de Aulas
     @OneToMany(mappedBy = "group")
     @Setter(AccessLevel.NONE)
-    private Set<Class> classes = new HashSet<>();
+    private Set<Classes> classes = new HashSet<>();
 
     private LocalDate startDateTime; // Data de inicio de ano letivo para essa turma
     private LocalDate endDateTime; // Data de fim de ano letivo para essa turma
@@ -55,22 +57,40 @@ public class Group {
     public Group(Group group) {
         this.id = group.id;
         this.period = group.period;
-        this.students = new ArrayList<>(group.students);
-        this.classes = new HashSet<>(group.classes);
         this.startDateTime = group.startDateTime;
         this.endDateTime = group.endDateTime;
         this.observation = group.observation;
+        this.students = new ArrayList<>(group.students);
+        this.classes = new HashSet<>(group.classes);
+    }
+
+    public Group(DadosCadastroGroup dadosCadastroGroup) {
+        this.period = dadosCadastroGroup.period();
+        this.startDateTime = dadosCadastroGroup.startDate();
+        this.endDateTime = dadosCadastroGroup.endDate();
+        this.observation = dadosCadastroGroup.observation();
+        this.students = dadosCadastroGroup
+                .students()
+                .stream()
+                .map(Student::new)
+                .collect(Collectors.toList());
+        this.classes = dadosCadastroGroup
+                .classes()
+                .stream()
+                .map(Classes::new)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public Object clone() {
 
-        Group group;
+        Group group = null;
 
         try {
-            group = (Group) super.clone();
-        } catch (CloneNotSupportedException e) {
             group = new Group(this);
+            group.students = new ArrayList<>(this.students);
+            group.classes = new HashSet<>(this.classes);
+        } catch (Exception ignored) {
         }
 
         return group;

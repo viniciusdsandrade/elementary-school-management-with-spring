@@ -1,5 +1,6 @@
 package com.restful.elementary.school.management.entity;
 
+import com.restful.elementary.school.management.dto.classes.DadosCadastroClass;
 import com.restful.elementary.school.management.entity.enums.Discipline;
 import com.restful.elementary.school.management.entity.enums.Room;
 import com.restful.elementary.school.management.entity.enums.Time;
@@ -12,7 +13,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /*
-Aulas: Representam um grupo de alunos, 
+Aulas:
+Representam um grupo de alunos,
 um professor, 
 um local, 
 um horário.
@@ -20,10 +22,10 @@ um horário.
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "Class")
-@Table(name = "tb_class",
+@Entity(name = "Classes")
+@Table(name = "tb_classes",
         schema = "db_elementary_school_management")
-public class Class {
+public class Classes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,18 +52,53 @@ public class Class {
     // A disciplina ministrada deve ser uma das disciplinas ministrada pelo professor
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
-    
+
     private LocalDate startDateTime;     //Horário de início
     private LocalDate endDateTime;     //Horário de término
-    
+
+    public Classes(DadosCadastroClass dadosCadastroClass) {
+        this.teacher = dadosCadastroClass.teacher();
+        this.group = dadosCadastroClass.group();
+        this.time = dadosCadastroClass.time();
+        this.room = dadosCadastroClass.room();
+        this.discipline = dadosCadastroClass.discipline();
+        this.startDateTime = dadosCadastroClass.startDateTime();
+        this.endDateTime = dadosCadastroClass.endDateTime();
+    }
+
+    //Construtor de cópia
+    public Classes(Classes copy) {
+        this.id = copy.id;
+        this.teacher = copy.teacher;
+        this.group = copy.group;
+        this.time = copy.time;
+        this.room = copy.room;
+        this.discipline = copy.discipline;
+        this.startDateTime = copy.startDateTime;
+        this.endDateTime = copy.endDateTime;
+    }
+
+    @Override
+    public Object clone() {
+
+        Classes clone = null;
+
+        try {
+            clone = new Classes(this);
+        } catch (Exception ignored) {
+        }
+
+        return clone;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
         if (this.getClass() != o.getClass()) return false;
-        
-        Class that = (Class) o;
-        
+
+        Classes that = (Classes) o;
+
         return Objects.equals(this.id, that.id) &&
                 Objects.equals(this.teacher, that.teacher) &&
                 Objects.equals(this.group, that.group) &&
@@ -73,7 +110,7 @@ public class Class {
     }
 
     @Override
-    public final int hashCode(){
+    public final int hashCode() {
         final int prime = 31;
         int hash = 1;
 
@@ -103,5 +140,4 @@ public class Class {
                 "  \"endDateTime\": \"" + this.endDateTime + "\"\n" +
                 "}";
     }
-
 }

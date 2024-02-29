@@ -34,15 +34,15 @@ public class Address {
         this.zipCode = dadosCadastroEndereco.zipCode();
     }
 
-    public Address(Address address) {
-        this.street = address.street;
-        this.number = address.number;
-        this.complement = address.complement;
-        this.neighborhood = address.neighborhood;
-        this.city = address.city;
-        this.state = address.state;
-        this.country = address.country;
-        this.zipCode = address.zipCode;
+    public Address(Address copy) {
+        this.street = copy.street;
+        this.number = copy.number;
+        this.complement = copy.complement;
+        this.neighborhood = copy.neighborhood;
+        this.city = copy.city;
+        this.state = copy.state;
+        this.country = copy.country;
+        this.zipCode = copy.zipCode;
     }
 
     @Override
