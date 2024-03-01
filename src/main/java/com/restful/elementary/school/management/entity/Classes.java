@@ -1,6 +1,6 @@
 package com.restful.elementary.school.management.entity;
 
-import com.restful.elementary.school.management.dto.classes.DadosCadastroClass;
+import com.restful.elementary.school.management.dto.classes.DadosCadastroClasses;
 import com.restful.elementary.school.management.entity.enums.Discipline;
 import com.restful.elementary.school.management.entity.enums.Room;
 import com.restful.elementary.school.management.entity.enums.Time;
@@ -36,16 +36,17 @@ public class Classes {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    // Uma aula tem uma Turma (Grupo de alunos), mas um grupo de alunos pode ter várias aulas
+    // Uma aula tem uma Turma (Grupo de alunos),
+    // Um grupo de alunos pode ter várias aulas
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    //Turno (Manhã, Tarde, Noite)
+    // Turno (MORNING,AFTERNOON,EVENING,NIGHT,INTEGRAL)
     @Enumerated(EnumType.STRING)
     private Time time;
 
-    //Sala Física (A, B, C)
+    // Sala Física (ROOM_01, ROOM_02,...., ROOM_15)
     @Enumerated(EnumType.STRING)
     private Room room;
 
@@ -53,17 +54,17 @@ public class Classes {
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
-    private LocalDate startDateTime;     //Horário de início
-    private LocalDate endDateTime;     //Horário de término
+    private LocalDate startDate;// Horário de início
+    private LocalDate endDate;// Horário de término
 
-    public Classes(DadosCadastroClass dadosCadastroClass) {
-        this.teacher = dadosCadastroClass.teacher();
-        this.group = dadosCadastroClass.group();
-        this.time = dadosCadastroClass.time();
-        this.room = dadosCadastroClass.room();
-        this.discipline = dadosCadastroClass.discipline();
-        this.startDateTime = dadosCadastroClass.startDateTime();
-        this.endDateTime = dadosCadastroClass.endDateTime();
+    public Classes(DadosCadastroClasses dadosCadastroClasses) {
+        this.teacher = dadosCadastroClasses.teacher();
+        this.group = dadosCadastroClasses.group();
+        this.time = dadosCadastroClasses.time();
+        this.room = dadosCadastroClasses.room();
+        this.discipline = dadosCadastroClasses.discipline();
+        this.startDate = dadosCadastroClasses.startDateTime();
+        this.endDate = dadosCadastroClasses.endDateTime();
     }
 
     //Construtor de cópia
@@ -74,8 +75,8 @@ public class Classes {
         this.time = copy.time;
         this.room = copy.room;
         this.discipline = copy.discipline;
-        this.startDateTime = copy.startDateTime;
-        this.endDateTime = copy.endDateTime;
+        this.startDate = copy.startDate;
+        this.endDate = copy.endDate;
     }
 
     @Override
@@ -105,8 +106,8 @@ public class Classes {
                 Objects.equals(this.time, that.time) &&
                 Objects.equals(this.room, that.room) &&
                 Objects.equals(this.discipline, that.discipline) &&
-                Objects.equals(this.startDateTime, that.startDateTime) &&
-                Objects.equals(this.endDateTime, that.endDateTime);
+                Objects.equals(this.startDate, that.startDate) &&
+                Objects.equals(this.endDate, that.endDate);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class Classes {
         hash *= prime + ((this.time == null) ? 0 : this.time.hashCode());
         hash *= prime + ((this.room == null) ? 0 : this.room.hashCode());
         hash *= prime + ((this.discipline == null) ? 0 : this.discipline.hashCode());
-        hash *= prime + ((this.startDateTime == null) ? 0 : this.startDateTime.hashCode());
+        hash *= prime + ((this.startDate == null) ? 0 : this.startDate.hashCode());
 
         if (hash < 0) hash = -hash;
 
@@ -136,8 +137,8 @@ public class Classes {
                 "  \"time\": \"" + this.time + "\",\n" +
                 "  \"room\": \"" + this.room + "\",\n" +
                 "  \"discipline\": \"" + this.discipline + "\",\n" +
-                "  \"startDateTime\": \"" + this.startDateTime + "\",\n" +
-                "  \"endDateTime\": \"" + this.endDateTime + "\"\n" +
+                "  \"startDateTime\": \"" + this.startDate + "\",\n" +
+                "  \"endDateTime\": \"" + this.endDate + "\"\n" +
                 "}";
     }
 }

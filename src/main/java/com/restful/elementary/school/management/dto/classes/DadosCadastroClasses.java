@@ -9,9 +9,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
-public record DadosCadastroClass(
+public record DadosCadastroClasses(
 
         @Valid
         @NotNull(message = "Teacher cannot be null")
@@ -36,12 +35,4 @@ public record DadosCadastroClass(
         LocalDate startDateTime,
         LocalDate endDateTime
 ) {
-
-    public DadosCadastroClass {
-        Objects.requireNonNull(teacher);
-        Objects.requireNonNull(group);
-        Objects.requireNonNull(time);
-        Objects.requireNonNull(room);
-        Objects.requireNonNull(discipline);
-    }
 }

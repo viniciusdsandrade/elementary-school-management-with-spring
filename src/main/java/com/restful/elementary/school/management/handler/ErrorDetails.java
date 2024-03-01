@@ -9,13 +9,4 @@ public record ErrorDetails(
         String field,
         String details,
         String error) {
-
-    public ErrorDetails(FieldError erro) {
-        this(
-                LocalDateTime.now(),
-                erro.getField(),
-                erro.getDefaultMessage(),
-                erro.getCode()
-        );
-    }
 }

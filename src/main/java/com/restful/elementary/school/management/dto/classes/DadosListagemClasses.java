@@ -32,8 +32,8 @@ public record DadosListagemClasses(
                 classesEntity.getTime(),
                 classesEntity.getRoom(),
                 classesEntity.getDiscipline(),
-                classesEntity.getStartDateTime(),
-                classesEntity.getEndDateTime()
+                classesEntity.getStartDate(),
+                classesEntity.getEndDate()
         );
     }
 }

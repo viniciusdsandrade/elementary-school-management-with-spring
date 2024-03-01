@@ -7,6 +7,7 @@ Um grupo tem uma lista de estudantes, mas um estudante pertence a um grupo
 
 
 import com.restful.elementary.school.management.dto.group.DadosCadastroGroup;
+import com.restful.elementary.school.management.entity.enums.Discipline;
 import com.restful.elementary.school.management.entity.enums.Period;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -16,7 +17,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /*
 Turma: 
@@ -54,6 +54,26 @@ public class Group {
 
     private String observation;
 
+    public List<Student> getStudents() {
+        return Collections.unmodifiableList(students);
+    }
+
+    public void addClasses(Classes classes) {
+        this.classes.add(classes);
+    }
+
+    public void addStudents(List<Student> students) {
+        this.students.addAll(students);
+    }
+
+    public Group(DadosCadastroGroup dadosCadastroGroup) {
+        this.period = dadosCadastroGroup.period();
+        this.startDateTime = dadosCadastroGroup.startDate();
+        this.endDateTime = dadosCadastroGroup.endDate();
+        this.observation = dadosCadastroGroup.observation();
+        this.students = dadosCadastroGroup.students();
+    }
+
     public Group(Group group) {
         this.id = group.id;
         this.period = group.period;
@@ -64,23 +84,6 @@ public class Group {
         this.classes = new HashSet<>(group.classes);
     }
 
-    public Group(DadosCadastroGroup dadosCadastroGroup) {
-        this.period = dadosCadastroGroup.period();
-        this.startDateTime = dadosCadastroGroup.startDate();
-        this.endDateTime = dadosCadastroGroup.endDate();
-        this.observation = dadosCadastroGroup.observation();
-        this.students = dadosCadastroGroup
-                .students()
-                .stream()
-                .map(Student::new)
-                .collect(Collectors.toList());
-        this.classes = dadosCadastroGroup
-                .classes()
-                .stream()
-                .map(Classes::new)
-                .collect(Collectors.toSet());
-    }
-
     @Override
     public Object clone() {
 
@@ -89,7 +92,6 @@ public class Group {
         try {
             group = new Group(this);
             group.students = new ArrayList<>(this.students);
-            group.classes = new HashSet<>(this.classes);
         } catch (Exception ignored) {
         }
 
@@ -132,7 +134,6 @@ public class Group {
                 "  \"id\": " + this.id + ",\n" +
                 "  \"period\": \"" + this.period + "\",\n" +
                 "  \"students\": " + this.students.toString() + ",\n" +
-                "  \"classes\": " + this.classes.toString() + ",\n" +
                 "  \"startDateTime\": \"" + this.startDateTime + "\",\n" +
                 "  \"endDateTime\": \"" + this.endDateTime + "\",\n" +
                 "  \"observation\": \"" + this.observation + "\"\n" +

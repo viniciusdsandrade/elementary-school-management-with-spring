@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -44,6 +45,11 @@ public class Student {
     private String allergies;
     private String medicalConditions;
 
+
+    public List<Student> createList(List<Student> students) {
+        return List.copyOf(students);
+    }
+
     public Student(DadosCadastroStudent dadosCadastroStudent) {
         this.name = dadosCadastroStudent.name();
         this.email = dadosCadastroStudent.email();
@@ -72,6 +78,7 @@ public class Student {
         this.allergies = student.allergies;
         this.medicalConditions = student.medicalConditions;
     }
+
 
     @Override
     public Student clone() {
@@ -125,4 +132,6 @@ public class Student {
                 " \"group\": \"" + this.group + "\"\n" +
                 "}";
     }
+
+
 }
